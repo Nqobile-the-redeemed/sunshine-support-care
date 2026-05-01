@@ -44,7 +44,14 @@ export default function ComingSoonPage() {
     <div className='min-h-screen bg-[#FCFCFA]'>
       <header className='mx-auto w-full max-w-(--breakpoint-2xl) px-4 pt-6 sm:px-6 lg:px-8'>
         <div className='flex items-center justify-between gap-4 rounded-2xl bg-gray-100/80 px-4 py-3 sm:px-6 sm:py-4'>
-          <img src='/images/header-logo.svg' alt='Sunshine Support Care' className='h-8 w-auto shrink-0 sm:h-9' />
+          <Image
+            src='/images/header-logo.svg'
+            alt='Sunshine Support Care'
+            width={140}
+            height={36}
+            priority
+            className='h-8 w-auto shrink-0 sm:h-9'
+          />
           <a
             href='tel:+447518519306'
             className='shrink-0 text-sm font-semibold text-[#2F2D3A] underline-offset-4 hover:underline sm:text-base'
@@ -154,7 +161,13 @@ export default function ComingSoonPage() {
           <div className='shadow-theme-sm rounded-t-3xl bg-white px-5 py-8 sm:px-10 sm:py-10'>
             <div className='grid items-center gap-8 md:grid-cols-2'>
               <div className='flex justify-center md:justify-start'>
-                <img src='/images/bottom-logo.svg' alt='Sunshine Support Care' className='h-16 w-auto sm:h-20' />
+                <Image
+                  src='/images/bottom-logo.svg'
+                  alt='Sunshine Support Care'
+                  width={320}
+                  height={80}
+                  className='h-16 w-auto sm:h-20'
+                />
               </div>
 
               <address className='text-center text-sm leading-6 text-[#2F2D3A]/80 not-italic sm:text-base md:text-right'>
