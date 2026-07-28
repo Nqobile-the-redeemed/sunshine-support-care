@@ -5,6 +5,22 @@ export type WebQueryResponse = {
   receivedAt: string
 }
 
+export type WhatsappIntentResponse = {
+  verified: boolean
+  intent: string
+  webSource: string
+  expiresIn: number
+}
+
+export type WhatsappIntentPayload = {
+  intent: string
+  sourceUrl: string
+  formStartedAt: number
+  website?: string
+  recaptchaToken?: string | null
+  recaptchaAction?: string
+}
+
 export type SunshineContactSubmission = {
   name: string
   email: string
@@ -79,6 +95,44 @@ export async function submitSunshineContact(payload: SunshineContactSubmission) 
   if (!response.ok || body.success === false) {
     const validationMessage = Object.values(body.errors ?? {}).flat()[0]
     throw new ApiError(validationMessage ?? body.message ?? 'Your message could not be sent.', body.errors)
+  }
+
+  return body.data
+}
+
+export async function verifySunshineWhatsappIntent(payload: WhatsappIntentPayload) {
+  const formData = new FormData()
+
+  formData.set('intent', payload.intent)
+  formData.set('form_started_at', String(payload.formStartedAt))
+  formData.set('source_url', payload.sourceUrl)
+  formData.set('web_source', WEB_SOURCE)
+  formData.set('website', payload.website ?? '')
+
+  if (payload.recaptchaToken) {
+    formData.set('recaptcha_token', payload.recaptchaToken)
+    formData.set('recaptcha_action', payload.recaptchaAction ?? 'sunshine_whatsapp')
+  }
+
+  const response = await fetch(`${API_BASE_URL}/v1/whatsapp-intents`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json'
+    },
+    body: formData
+  })
+
+  let body: ApiEnvelope<WhatsappIntentResponse> = {}
+
+  try {
+    body = (await response.json()) as ApiEnvelope<WhatsappIntentResponse>
+  } catch {
+    // Keep status fallback below for proxy/html errors.
+  }
+
+  if (!response.ok || body.success === false) {
+    const validationMessage = Object.values(body.errors ?? {}).flat()[0]
+    throw new ApiError(validationMessage ?? body.message ?? 'The WhatsApp chat could not be started.', body.errors)
   }
 
   return body.data

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { WhatsappChatBox } from './WhatsappChatBox'
 
 export function SunshineHeader() {
   return (
@@ -67,6 +68,7 @@ export function SunshinePageShell({ children }: { children: React.ReactNode }) {
       <SunshineHeader />
       {children}
       <SunshineFooter />
+      <WhatsappChatBox />
     </div>
   )
 }
