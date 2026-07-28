@@ -1,12 +1,25 @@
-import { Outfit } from 'next/font/google'
+import type { Metadata } from 'next'
 import './globals.css'
 
 import { SidebarProvider } from '@/context/SidebarContext'
 import { ThemeProvider } from '@/context/ThemeContext'
 
-const outfit = Outfit({
-  subsets: ['latin']
-})
+export const metadata: Metadata = {
+  title: {
+    default: 'Sunshine Support Care | Domiciliary and Supported Living Care',
+    template: '%s | Sunshine Support Care'
+  },
+  description:
+    'Sunshine Support Care provides domiciliary care and supported living care with a warm, person-centred approach.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/images/scc-icon.svg', type: 'image/svg+xml' }
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png'
+  }
+}
 
 export default function RootLayout({
   children
@@ -14,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
-      <body className={`${outfit.className} dark:bg-gray-900`}>
+    <html lang='en-GB'>
+      <body className='dark:bg-gray-900'>
         <ThemeProvider>
           <SidebarProvider>{children}</SidebarProvider>
         </ThemeProvider>
